@@ -50,10 +50,10 @@ function Navbar() {
     <nav
       style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-        background: scrolled ? "rgba(10,25,12,0.97)" : "rgba(10,25,12,0.55)",
-        backdropFilter: "blur(12px)",
+        background: scrolled ? "rgba(10,25,12,0.96)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(201,162,39,0.2)" : "none",
-        transition: "background 0.4s ease, border-color 0.4s ease",
+        transition: "background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease",
         padding: "0 32px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         height: "72px",
@@ -286,10 +286,10 @@ function CardItem({ card, delay, visible }: { card: typeof CARDS[0]; delay: numb
         background: "#fff",
         borderRadius: "8px",
         overflow: "hidden",
-        boxShadow: hovered ? "0 24px 64px rgba(10,25,12,0.18)" : "0 4px 24px rgba(10,25,12,0.08)",
-        transform: visible ? (hovered ? "translateY(-8px)" : "translateY(0)") : "translateY(32px)",
+        boxShadow: hovered ? "0 28px 72px rgba(10,25,12,0.22), 0 0 0 1px rgba(201,162,39,0.15)" : "0 6px 28px rgba(10,25,12,0.1)",
+        transform: visible ? (hovered ? "translateY(-10px) scale(1.01)" : "translateY(0) scale(1)") : "translateY(32px)",
         opacity: visible ? 1 : 0,
-        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms, box-shadow 0.3s ease`,
+        transition: `opacity 0.6s ease ${delay}ms, transform 0.45s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms, box-shadow 0.35s ease`,
         display: "flex", flexDirection: "column",
       }}
     >
@@ -364,11 +364,15 @@ function TrustBar() {
     <section ref={ref} style={{ background: "#1a3a1f", padding: "56px 0" }}>
       <div className="container">
         <div style={{
-          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: "40px", textAlign: "center",
+          display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "24px", textAlign: "center",
         }}>
           {stats.map((s, i) => (
             <div key={s.label} style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(201,162,39,0.2)",
+              borderRadius: "8px",
+              padding: "28px 20px",
               opacity: inView ? 1 : 0,
               transform: inView ? "translateY(0)" : "translateY(20px)",
               transition: `opacity 0.6s ease ${i * 100}ms, transform 0.6s ease ${i * 100}ms`,
@@ -376,7 +380,7 @@ function TrustBar() {
               <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "42px", fontWeight: 700, color: "#c9a227", lineHeight: 1 }}>
                 {s.num}
               </div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.65)", marginTop: "8px", letterSpacing: "0.04em" }}>
+              <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.65)", marginTop: "10px", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                 {s.label}
               </div>
             </div>
@@ -528,33 +532,59 @@ function Amenities() {
   );
 }
 
+// ─── Gallery Image Component ────────────────────────────────────
+function GalleryImg({ src, alt, style }: { src: string; alt: string; style?: React.CSSProperties }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        overflow: "hidden",
+        borderRadius: "10px",
+        boxShadow: hovered ? "0 20px 56px rgba(10,25,12,0.22)" : "0 6px 24px rgba(10,25,12,0.1)",
+        transition: "box-shadow 0.35s ease, transform 0.35s ease",
+        transform: hovered ? "scale(1.015)" : "scale(1)",
+        cursor: "pointer",
+        ...style,
+      }}
+    >
+      <img
+        src={src} alt={alt}
+        style={{
+          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          transform: hovered ? "scale(1.06)" : "scale(1)",
+          transition: "transform 0.5s ease",
+        }}
+      />
+    </div>
+  );
+}
+
 // ─── Gallery ─────────────────────────────────────────────────────
 function Gallery() {
   const { ref, inView } = useInView(0.05);
   return (
-    <section ref={ref} style={{ background: "#0e2112", padding: "0" }}>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr 1fr",
-        gridTemplateRows: "240px 240px",
-        gap: "3px",
-        opacity: inView ? 1 : 0,
-        transition: "opacity 0.8s ease",
-      }} className="gallery-grid">
-        <div style={{ gridRow: "1 / 3", overflow: "hidden" }}>
-          <img src={ASSETS.vacationsExterior} alt="Resort exterior" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      <section ref={ref} style={{ background: "#f5f0e8", padding: "80px 0" }}>
+      <div className="container">
+        <div style={{ textAlign: "center", marginBottom: "48px" }}>
+          <div style={sectionLabel}>The Resort</div>
+          <div style={sectionDivider} />
+          <h2 style={{ ...sectionTitle, color: "#1a3a1f", fontSize: "clamp(28px, 3.5vw, 44px)" }}>A Glimpse of Thousand Hills</h2>
         </div>
-        <div style={{ overflow: "hidden" }}>
-          <img src={ASSETS.golfHole1} alt="Golf hole" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
-        <div style={{ overflow: "hidden" }}>
-          <img src={ASSETS.hotelRoom} alt="Hotel room" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
-        <div style={{ overflow: "hidden" }}>
-          <img src={ASSETS.golfFairway} alt="Golf fairway" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
-        <div style={{ overflow: "hidden" }}>
-          <img src={ASSETS.vacationsCondo} alt="Vacation condo" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr 1fr",
+          gridTemplateRows: "260px 260px",
+          gap: "12px",
+          opacity: inView ? 1 : 0,
+          transition: "opacity 0.8s ease",
+        }} className="gallery-grid">
+          <GalleryImg src={ASSETS.vacationsExterior} alt="Resort exterior" style={{ gridRow: "1 / 3" }} />
+          <GalleryImg src={ASSETS.golfHole1} alt="Golf hole" />
+          <GalleryImg src={ASSETS.hotelRoom} alt="Hotel room" />
+          <GalleryImg src={ASSETS.golfFairway} alt="Golf fairway" />
+          <GalleryImg src={ASSETS.vacationsCondo} alt="Vacation condo" />
         </div>
       </div>
     </section>

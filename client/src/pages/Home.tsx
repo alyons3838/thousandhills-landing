@@ -221,6 +221,7 @@ const CARDS = [
     href: "https://www.thousandhillsvacations.com",
     btnColor: "#b01c2e",
     btnHover: "#8a1522",
+    exploreId: "vacations",
   },
   {
     logo: ASSETS.thrhLogo,
@@ -233,6 +234,7 @@ const CARDS = [
     href: "https://www.thousandhillsresorthotel.com",
     btnColor: "#1a3a1f",
     btnHover: "#0e2112",
+    exploreId: "hotel",
   },
   {
     logo: ASSETS.thLogo,
@@ -245,6 +247,7 @@ const CARDS = [
     href: "https://www.thousandhills.com/branson-golf/",
     btnColor: "#1a3a1f",
     btnHover: "#0e2112",
+    exploreId: "golf",
   },
 ];
 
@@ -330,6 +333,28 @@ function CardItem({ card, delay, visible }: { card: typeof CARDS[0]; delay: numb
           ))}
         </div>
 
+        {/* Explore More button */}
+        <button
+          onClick={() => {
+            const el = document.getElementById(card.exploreId);
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+          style={{
+            display: "block", width: "100%", textAlign: "center",
+            background: "transparent", color: card.btnColor,
+            padding: "12px 24px", borderRadius: "4px",
+            border: `1.5px solid ${card.btnColor}`,
+            fontFamily: "Inter, sans-serif", fontSize: "12px",
+            fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+            cursor: "pointer", marginBottom: "10px",
+            transition: "background 0.2s, color 0.2s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = card.btnColor; e.currentTarget.style.color = "#fff"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = card.btnColor; }}
+        >
+          Explore More ↓
+        </button>
+
         {/* CTA */}
         <a
           href={card.href} target="_blank" rel="noopener noreferrer"
@@ -348,6 +373,198 @@ function CardItem({ card, delay, visible }: { card: typeof CARDS[0]; delay: numb
         </a>
       </div>
     </div>
+  );
+}
+
+// ─── Vacations Section ──────────────────────────────────────────
+function VacationsSection() {
+  const { ref, inView } = useInView(0.08);
+  return (
+    <section id="vacations" ref={ref} style={{
+      background: "#1a0a0c",
+      backgroundImage: `linear-gradient(rgba(176,28,46,0.82), rgba(100,10,20,0.92)), url(${ASSETS.vacationsExterior})`,
+      backgroundSize: "cover", backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      padding: "100px 0",
+    }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "72px", alignItems: "center" }} className="golf-grid">
+          {/* Left */}
+          <div style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateX(0)" : "translateX(-32px)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
+          }}>
+            <img src={ASSETS.thvLogo} alt="Thousand Hills Vacations" style={{ maxHeight: "56px", objectFit: "contain", marginBottom: "24px", filter: "brightness(0) invert(1)" }} />
+            <div style={{ ...sectionLabelLight, color: "rgba(255,255,255,0.6)" }}>Vacation Rentals &amp; Packages</div>
+            <div style={{ width: "40px", height: "2px", background: "#fff", margin: "0 0 24px" }} />
+            <h2 style={{ fontFamily: "'Playfair Display', serif", color: "#fff", fontSize: "clamp(30px, 4vw, 50px)", fontWeight: 700, lineHeight: 1.15, margin: "0 0 24px" }}>
+              Branson's Premier Vacation Rental Experience
+            </h2>
+            <p style={{ fontFamily: "Inter, sans-serif", color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.75, marginBottom: "16px" }}>
+              Thousand Hills Vacations offers fully-equipped condos, cabins, and vacation homes nestled in the Ozarks — steps from the golf course and minutes from Branson's top attractions. Whether you're traveling with family, a group, or just the two of you, we have the perfect space.
+            </p>
+            <p style={{ fontFamily: "Inter, sans-serif", color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.75, marginBottom: "36px" }}>
+              Every rental includes full kitchen access, private balconies or decks with Ozark views, and exclusive discounts on golf for guests staying on property. Nightly, weekly, and seasonal rates available.
+            </p>
+
+            {/* Highlights grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
+              {[
+                ["🏠", "Condos & Cabins", "Fully furnished with full kitchens & living areas"],
+                ["🌄", "Ozark Views", "Private balconies overlooking the hills & course"],
+                ["⛳", "Golf Discounts", "Exclusive rates on tee times for all guests"],
+                ["📍", "Prime Location", "Minutes from Table Rock Lake & the 76 Strip"],
+              ].map(([icon, title, desc]) => (
+                <div key={title as string} style={{
+                  background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+                  borderRadius: "8px", padding: "18px 16px",
+                }}>
+                  <div style={{ fontSize: "22px", marginBottom: "8px" }}>{icon}</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{title}</div>
+                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <a href="https://www.thousandhillsvacations.com" target="_blank" rel="noopener noreferrer"
+                style={{ ...heroBtnPrimary, background: "#fff", color: "#b01c2e" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#f0e8e8")}
+                onMouseLeave={e => (e.currentTarget.style.background = "#fff")}
+              >🏠 Browse All Rentals</a>
+              <a href="https://www.thousandhillsvacations.com" target="_blank" rel="noopener noreferrer"
+                style={{ ...heroBtnOutline, borderColor: "rgba(255,255,255,0.4)" }}
+              >View Rates &amp; Availability</a>
+            </div>
+          </div>
+
+          {/* Right — image */}
+          <div style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateX(0)" : "translateX(32px)",
+            transition: "opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s",
+          }}>
+            <div style={{ borderRadius: "10px", overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", position: "relative" }}>
+              <img src={ASSETS.vacationsCondo} alt="Thousand Hills Vacation Condo" style={{ width: "100%", display: "block", objectFit: "cover", height: "420px" }} />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(transparent, rgba(100,10,20,0.92))",
+                padding: "32px 24px 24px",
+              }}>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: "12px",
+                  background: "rgba(176,28,46,0.5)", borderRadius: "6px",
+                  padding: "14px 18px", border: "1px solid rgba(255,255,255,0.2)",
+                }}>
+                  <span style={{ fontSize: "20px" }}>📞</span>
+                  <div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, color: "#fff", fontSize: "14px" }}>Ready to Book?</div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)", marginTop: "2px" }}>Visit thousandhillsvacations.com or call us today</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Hotel Section ───────────────────────────────────────────────
+function HotelSection() {
+  const { ref, inView } = useInView(0.08);
+  return (
+    <section id="hotel" ref={ref} style={{
+      background: "#0a1a2e",
+      backgroundImage: `linear-gradient(rgba(10,26,46,0.88), rgba(10,26,46,0.93)), url(${ASSETS.hotelRoom})`,
+      backgroundSize: "cover", backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      padding: "100px 0",
+    }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "72px", alignItems: "center" }} className="golf-grid">
+          {/* Left — image first on this one for visual variety */}
+          <div style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateX(0)" : "translateX(-32px)",
+            transition: "opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s",
+          }}>
+            <div style={{ borderRadius: "10px", overflow: "hidden", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", position: "relative" }}>
+              <img src={ASSETS.hotelRoom} alt="Thousand Hills Resort Hotel Room" style={{ width: "100%", display: "block", objectFit: "cover", height: "420px" }} />
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0,
+                background: "linear-gradient(transparent, rgba(10,26,46,0.92))",
+                padding: "32px 24px 24px",
+              }}>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: "12px",
+                  background: "rgba(10,26,46,0.7)", borderRadius: "6px",
+                  padding: "14px 18px", border: "1px solid rgba(201,162,39,0.25)",
+                }}>
+                  <span style={{ fontSize: "20px" }}>⭐</span>
+                  <div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, color: "#fff", fontSize: "14px" }}>Full-Service Resort Hotel</div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.6)", marginTop: "2px" }}>Daily housekeeping · Pool · Golf access included</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right — text */}
+          <div style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateX(0)" : "translateX(32px)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
+          }}>
+            <img src={ASSETS.thrhLogo} alt="Thousand Hills Resort Hotel" style={{ maxHeight: "72px", objectFit: "contain", marginBottom: "24px", filter: "brightness(0) invert(1)" }} />
+            <div style={{ ...sectionLabelLight, color: "rgba(255,255,255,0.6)" }}>Resort Hotel &amp; Suites</div>
+            <div style={{ width: "40px", height: "2px", background: "#c9a227", margin: "0 0 24px" }} />
+            <h2 style={{ fontFamily: "'Playfair Display', serif", color: "#fff", fontSize: "clamp(30px, 4vw, 50px)", fontWeight: 700, lineHeight: 1.15, margin: "0 0 24px" }}>
+              Hotel Comfort with a Resort Feel
+            </h2>
+            <p style={{ fontFamily: "Inter, sans-serif", color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.75, marginBottom: "16px" }}>
+              Thousand Hills Resort Hotel offers the convenience of a full-service hotel with the atmosphere of a private resort. Enjoy well-appointed rooms and suites, daily housekeeping, and direct access to the championship golf course — all in one place.
+            </p>
+            <p style={{ fontFamily: "Inter, sans-serif", color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.75, marginBottom: "36px" }}>
+              Ideal for couples, business travelers, and golf getaways. Our hotel guests receive preferred tee times and exclusive resort pricing on all Thousand Hills experiences.
+            </p>
+
+            {/* Highlights grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "36px" }}>
+              {[
+                ["🛏️", "Rooms & Suites", "Comfortable accommodations for every traveler"],
+                ["🏊", "Pool Access", "Resort pool available to all hotel guests"],
+                ["⛳", "Golf Packages", "Preferred tee times & discounted rates included"],
+                ["🍽️", "On-Site Dining", "Mulligan's Grill open seasonally on property"],
+              ].map(([icon, title, desc]) => (
+                <div key={title as string} style={{
+                  background: "rgba(201,162,39,0.08)", border: "1px solid rgba(201,162,39,0.2)",
+                  borderRadius: "8px", padding: "18px 16px",
+                }}>
+                  <div style={{ fontSize: "22px", marginBottom: "8px" }}>{icon}</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{title}</div>
+                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <a href="https://www.thousandhillsresorthotel.com" target="_blank" rel="noopener noreferrer"
+                style={{ ...heroBtnPrimary, background: "#c9a227", color: "#0a1a2e" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#b8911f")}
+                onMouseLeave={e => (e.currentTarget.style.background = "#c9a227")}
+              >🏨 Reserve a Room</a>
+              <a href="https://www.thousandhillsresorthotel.com" target="_blank" rel="noopener noreferrer"
+                style={{ ...heroBtnOutline, borderColor: "rgba(255,255,255,0.35)" }}
+              >View All Room Types</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -795,6 +1012,7 @@ const sectionTitle: React.CSSProperties = {
 const ResponsiveStyles = () => (
   <style>{`
     @media (max-width: 900px) {
+      .golf-grid, .vacations-grid, .hotel-grid { grid-template-columns: 1fr !important; }
       .golf-grid { grid-template-columns: 1fr !important; }
       .location-grid { grid-template-columns: 1fr !important; }
       .footer-grid { grid-template-columns: 1fr 1fr !important; }
@@ -820,6 +1038,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <DestinationCards />
+      <VacationsSection />
+      <HotelSection />
       <TrustBar />
       <GolfSection />
       <Amenities />

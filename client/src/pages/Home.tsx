@@ -71,12 +71,11 @@ function Navbar() {
       {/* Desktop Nav */}
       <div style={{ display: "flex", alignItems: "center", gap: "32px" }} className="hidden-mobile">
         <a href="#destinations" style={navLinkStyle}>Destinations</a>
-        <a href="#golf" style={navLinkStyle}>Golf Course</a>
+        <a href="/branson-golf/" style={navLinkStyle}>Golf Course</a>
         <a href="#location" style={navLinkStyle}>Location</a>
         <a href="tel:4173344553" style={{ ...navLinkStyle, color: "#c9a227" }}>417-334-4553</a>
         <a
-          href="https://www.thousandhillsvacations.com"
-          target="_blank" rel="noopener noreferrer"
+          href="/search-results/"
           style={{
             background: "#b01c2e", color: "#fff", padding: "10px 22px",
             borderRadius: "4px", fontFamily: "Inter, sans-serif", fontSize: "13px",
@@ -104,7 +103,7 @@ function Navbar() {
           display: "flex", flexDirection: "column", gap: "20px",
           borderTop: "1px solid rgba(201,162,39,0.2)",
         }}>
-          {[["#destinations","Destinations"],["#golf","Golf Course"],["#location","Location"]].map(([href, label]) => (
+          {[["#destinations","Destinations"],["/branson-golf/","Golf Course"],["#location","Location"]].map(([href, label]) => (
             <a key={href} href={href} onClick={() => setMenuOpen(false)}
               style={{ color: "rgba(255,255,255,0.85)", fontFamily: "Inter, sans-serif", fontSize: "15px", textDecoration: "none" }}>
               {label}
@@ -175,7 +174,7 @@ function Hero() {
           opacity: 0, animation: "fadeInUp 0.8s ease 0.65s forwards",
         }}>
           <a href="#destinations" style={heroBtnPrimary}>Explore Destinations</a>
-          <a href="#golf" style={heroBtnOutline}>Golf Course Info</a>
+          <a href="/branson-golf/" style={heroBtnOutline}>Golf Course Info</a>
         </div>
       </div>
 
@@ -217,8 +216,8 @@ const CARDS = [
     title: "Vacation Rentals & Packages",
     desc: "Spacious condos, cabins, and vacation homes with full kitchens, private balconies, and stunning Ozark views. Perfect for families, groups, and extended stays.",
     tags: ["Condos & Cabins", "Full Kitchens", "Golf Discounts", "Lake Views"],
-    cta: "Explore Vacation Rentals",
-    href: "https://www.thousandhillsvacations.com",
+    cta: "Explore Lodging Concept",
+    href: "/branson-lodging/",
     btnColor: "#b01c2e",
     btnHover: "#8a1522",
     exploreId: "vacations",
@@ -230,8 +229,9 @@ const CARDS = [
     title: "Resort Hotel & Suites",
     desc: "Comfortable hotel rooms and suites with resort amenities, daily housekeeping, and direct access to the golf course. Ideal for couples and business travelers.",
     tags: ["Hotel Rooms", "Suites", "Pool Access", "Golf Packages"],
-    cta: "View Hotel Rooms",
+    cta: "Visit Resort Hotel",
     href: "https://www.thousandhillsresorthotel.com",
+    external: true,
     btnColor: "#1a3a1f",
     btnHover: "#0e2112",
     exploreId: "hotel",
@@ -243,8 +243,8 @@ const CARDS = [
     title: "18-Hole Championship Golf",
     desc: "Golf Digest 4-Star rated. 18 holes through hardwood forests and Ozark streams. Open to the public with four sets of tees for all skill levels. Book tee times up to 30 days in advance.",
     tags: ["4-Star Rated", "Public Course", "GPS Carts", "Pro Shop"],
-    cta: "Book a Tee Time",
-    href: "https://www.thousandhills.com/branson-golf/",
+    cta: "Explore Golf Concept",
+    href: "/branson-golf/",
     btnColor: "#1a3a1f",
     btnHover: "#0e2112",
     exploreId: "golf",
@@ -357,7 +357,7 @@ function CardItem({ card, delay, visible }: { card: typeof CARDS[0]; delay: numb
 
         {/* CTA */}
         <a
-          href={card.href} target="_blank" rel="noopener noreferrer"
+          href={card.href} target={card.external ? "_blank" : undefined} rel={card.external ? "noopener noreferrer" : undefined}
           style={{
             display: "block", textAlign: "center",
             background: card.btnColor, color: "#fff",
@@ -428,14 +428,14 @@ function VacationsSection() {
             </div>
 
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <a href="https://www.thousandhillsvacations.com" target="_blank" rel="noopener noreferrer"
+              <a href="/branson-lodging/"
                 style={{ ...heroBtnPrimary, background: "#fff", color: "#b01c2e" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "#f0e8e8")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#fff")}
-              >🏠 Browse All Rentals</a>
-              <a href="https://www.thousandhillsvacations.com" target="_blank" rel="noopener noreferrer"
+              >🏠 Explore Lodging Concept</a>
+              <a href="/search-results/"
                 style={{ ...heroBtnOutline, borderColor: "rgba(255,255,255,0.4)" }}
-              >View Rates &amp; Availability</a>
+              >View Rental Search Concept</a>
             </div>
           </div>
 
@@ -459,8 +459,8 @@ function VacationsSection() {
                 }}>
                   <span style={{ fontSize: "20px" }}>📞</span>
                   <div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, color: "#fff", fontSize: "14px" }}>Ready to Book?</div>
-                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)", marginTop: "2px" }}>Visit thousandhillsvacations.com or call us today</div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, color: "#fff", fontSize: "14px" }}>Ready to Explore?</div>
+                    <div style={{ fontFamily: "Inter, sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.7)", marginTop: "2px" }}>Open the redesigned lodging and rental-search concepts</div>
                   </div>
                 </div>
               </div>
@@ -660,14 +660,14 @@ function GolfSection() {
             </div>
 
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <a href="https://www.thousandhills.com/branson-golf/" target="_blank" rel="noopener noreferrer"
+              <a href="/branson-golf/#tee-times"
                 style={{ ...heroBtnPrimary, background: "#c9a227", color: "#0e2112" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "#b8911f")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#c9a227")}
-              >📅 Book Tee Time Online</a>
-              <a href="https://www.thousandhills.com/branson-golf/" target="_blank" rel="noopener noreferrer"
+              >📅 Explore Tee Time Concept</a>
+              <a href="/branson-golf/#course-details"
                 style={{ ...heroBtnOutline, borderColor: "rgba(255,255,255,0.35)" }}
-              >View Course Details</a>
+              >View Course Concept</a>
             </div>
           </div>
 
@@ -860,11 +860,11 @@ function Location() {
             ))}
 
             <div style={{ display: "flex", gap: "16px", marginTop: "32px", flexWrap: "wrap" }}>
-              <a href="https://www.thousandhillsvacations.com" target="_blank" rel="noopener noreferrer"
+              <a href="/branson-lodging/"
                 style={{ ...heroBtnPrimary, background: "#b01c2e" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "#8a1522")}
                 onMouseLeave={e => (e.currentTarget.style.background = "#b01c2e")}
-              >📅 Book Vacation Rental</a>
+              >📅 Explore Lodging Concept</a>
               <a href="https://www.thousandhillsresorthotel.com" target="_blank" rel="noopener noreferrer"
                 style={{ ...heroBtnPrimary, background: "#1a3a1f" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "#0e2112")}
@@ -901,27 +901,23 @@ function Footer() {
           {/* Our Properties */}
           <div>
             <div style={footerHeading}>Our Properties</div>
-            {[
-              ["https://www.thousandhillsvacations.com", "Thousand Hills Vacations"],
-              ["https://www.thousandhillsresorthotel.com", "Thousand Hills Resort Hotel"],
-              ["https://www.thousandhills.com/branson-golf/", "Branson Golf Course"],
-            ].map(([href, label]) => (
-              <a key={href} href={href} target="_blank" rel="noopener noreferrer" style={footerLink}>{label}</a>
-            ))}
+            <a href="/branson-lodging/" style={footerLink}>Thousand Hills Vacations</a>
+            <a href="https://www.thousandhillsresorthotel.com" target="_blank" rel="noopener noreferrer" style={footerLink}>Thousand Hills Resort Hotel</a>
+            <a href="/branson-golf/" style={footerLink}>Branson Golf Course</a>
           </div>
 
           {/* Golf Course */}
           <div>
             <div style={footerHeading}>Golf Course</div>
             {[
-              ["https://www.thousandhills.com/branson-golf/", "Book Tee Time"],
-              ["https://www.thousandhills.com/branson-golf/", "Rates & Fees"],
-              ["https://www.thousandhills.com/branson-golf/", "Specials & Coupons"],
-              ["https://www.thousandhills.com/branson-golf/", "Group Outings"],
-              ["https://www.thousandhills.com/branson-golf/", "Senior Rates"],
-              ["https://www.thousandhills.com/branson-golf/", "Course Layout"],
+              ["/branson-golf/#tee-times", "Tee Time Concept"],
+              ["/branson-golf/#course-details", "Course Details"],
+              ["/branson-golf/#course-details", "Rates & Fees"],
+              ["/branson-golf/#course-details", "Group Outings"],
+              ["/branson-golf/#course-details", "Senior Rates"],
+              ["/branson-golf/#course-details", "Course Layout"],
             ].map(([href, label]) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer" style={footerLink}>{label}</a>
+              <a key={label} href={href} style={footerLink}>{label}</a>
             ))}
           </div>
 

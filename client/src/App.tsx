@@ -5,12 +5,26 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import {
+  AttractionsPage,
+  CabinsPage,
+  ContactPage,
+  GolfPage,
+  LodgingPage,
+  SearchResultsPage,
+} from "./pages/ResortConceptPages";
 
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/branson-lodging/branson-cabins/"} component={CabinsPage} />
+      <Route path={"/branson-lodging/"} component={LodgingPage} />
+      <Route path={"/search-results/"} component={SearchResultsPage} />
+      <Route path={"/branson-golf/"} component={GolfPage} />
+      <Route path={"/contact-us/"} component={ContactPage} />
+      <Route path={"/branson-attractions/"} component={AttractionsPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
